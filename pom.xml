@@ -11,6 +11,7 @@
     <modules>
         <module>com.lanxiang.spring</module>
         <module>com.lanxiang.springmvc</module>
+        <module>com.lanxiang.mybatis</module>
     </modules>
 
     <properties>
@@ -20,6 +21,7 @@
         <jetty.version>9.3.0.M1</jetty.version>
         <logback.version>1.1.7</logback.version>
         <lombok.version>1.14.8</lombok.version>
+        <mybatis.version>3.3.1</mybatis.version>
     </properties>
 
     <dependencies>
@@ -125,6 +127,14 @@
             <artifactId>jetty-servlet</artifactId>
             <version>${jetty.version}</version>
         </dependency>
+
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
