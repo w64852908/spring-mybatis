@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanxiang.mybatis.analysis.use.mapper.KindleMapper">
+
+    <resultMap id="BaseResultMap" type="com.lanxiang.mybatis.analysis.use.model.Kindle">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.lanxiang.mybatis.analysis.use.model.Kindle"
+            useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO kindle (name, price, version) VALUES
+      (
+        #{name,jdbcType=VARCHAR},
+        #{price,jdbcType=BIGINT},
+        #{version,jdbcType=INTEGER}
+      )
+    </insert>
+
+    <resultMap id="kindleResult" type="com.lanxiang.mybatis.analysis.use.model.Kindle">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <association property="kindleSkin" column="id" javaType="com.lanxiang.mybatis.analysis.use.model.KindleSkin"
+                     select="selectKindleSkin"/>
+    </resultMap>
+
+    <select id="selectKindle" parameterType="int" resultMap="kindleResult">
+        SELECT id,name,price,version FROM kindle WHERE version = #{version}
+    </select>
+
+    <select id="selectKindleSkin" parameterType="int" resultType="com.lanxiang.mybatis.analysis.use.model.KindleSkin">
+        SELECT kindle_id as kindleId,color FROM kindle_skin WHERE kindle_id = #{kindleId}
+    </select>
+
+
+    <resultMap id="joinResult" type="com.lanxiang.mybatis.analysis.use.model.Kindle">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <association property="kindleSkin" column="id" javaType="com.lanxiang.mybatis.analysis.use.model.KindleSkin">
+            <id column="id" property="id" jdbcType="BIGINT"/>
+            <result column="kindle_id" property="kindleId" jdbcType="BIGINT"/>
+            <result column="color" property="color" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <select id="joinSelect" parameterType="int" resultMap="joinResult">
+        SELECT k.id,k.name,k.price,k.version,s.kindle_id,s.color FROM kindle as k
+        LEFT JOIN kindle_skin as s ON k.id = s.kindle_id
+        WHERE k.version = #{version}
+    </select>
+</mapper>

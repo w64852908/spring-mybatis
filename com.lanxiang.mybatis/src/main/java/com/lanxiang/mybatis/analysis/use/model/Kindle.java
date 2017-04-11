@@ -9,7 +9,13 @@ import lombok.Data;
 @Data
 public class Kindle {
 
-    private String id;
+    private Long id;
 
     private String name;
+
+    private Long price;
+
+    private Integer version;
+
+    private KindleSkin kindleSkin;
 }
