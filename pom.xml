@@ -24,6 +24,8 @@
         <mybatis-spring.version>1.2.5</mybatis-spring.version>
         <dbcp.version>2.1.1</dbcp.version>
         <jdbc.version>5.1.23</jdbc.version>
+        <aspectj.version>1.8.10</aspectj.version>
+        <aop.version>1.0</aop.version>
     </properties>
 
     <dependencyManagement>
@@ -42,6 +44,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-jdbc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
                 <version>${spring.version}</version>
             </dependency>
 
@@ -107,10 +114,31 @@
                 <version>${dbcp.version}</version>
             </dependency>
 
+            <!-- mysql connector -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${jdbc.version}</version>
+            </dependency>
+
+            <!-- aopalliance -->
+            <dependency>
+                <groupId>aopalliance</groupId>
+                <artifactId>aopalliance</artifactId>
+                <version>${aop.version}</version>
+            </dependency>
+
+            <!-- aspectj -->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

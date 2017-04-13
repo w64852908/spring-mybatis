@@ -1,6 +1,8 @@
 package com.lanxiang.spring.run;
 
+import com.lanxiang.spring.service.PerformanceService;
 import com.lanxiang.spring.service.UserService;
+import com.lanxiang.spring.service.impl.PerformanceServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -16,6 +18,7 @@ public class Main {
     @Before
     public void init() {
         context = new ClassPathXmlApplicationContext("spring-context.xml");
+
     }
 
     @Test
@@ -23,5 +26,17 @@ public class Main {
         UserService userService = context.getBean(UserService.class);
         System.out.println(userService.getName());
         System.out.println(userService.getTime());
+    }
+
+    @Test
+    public void run1() {
+        UserService userService = context.getBean(UserService.class);
+        System.out.println(userService.getUserList());
+    }
+
+    @Test
+    public void run2() {
+        PerformanceService service = context.getBean(PerformanceService.class);
+        service.doSomething("hahahha");
     }
 }
