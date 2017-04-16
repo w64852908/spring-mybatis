@@ -5,6 +5,7 @@ import com.lanxiang.spring.model.User;
 import com.lanxiang.spring.service.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,11 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    @PostConstruct
+    public void init() {
+        System.out.println("init UserServiceImpl");
+    }
 
     @Resource
     private UserDAO userDAO;
