@@ -24,4 +24,8 @@ public class UnitTest {
         String userStr = "{\"name\":\"lanxiang\"}";
         System.out.println(objectMapper.readValue(userStr, User.class));
     }
+
+    @Test
+    public void run1() {
+    }
 }
