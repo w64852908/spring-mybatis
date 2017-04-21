@@ -1,0 +1,34 @@
+package com.lanxiang.rabbitmqmonitor.utils;
+
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
+
+/**
+ * Created by lanxiang on 2017/4/20.
+ */
+
+public class ConnectionUtil {
+
+    public static Connection getConnection() throws IOException, TimeoutException {
+        RMQConfig config = RMQConfig.Singleton.INSTANCE.getRmqConfig();
+        String host = config.getHost();
+        String username = config.getUsername();
+        String password = config.getPassword();
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost(host);
+        factory.setUsername(username);
+        factory.setPassword(password);
+        return factory.newConnection();
+    }
+
+    public static Connection getConnection(String host, String username, String password) throws IOException, TimeoutException {
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost(host);
+        factory.setUsername(username);
+        factory.setPassword(password);
+        return factory.newConnection();
+    }
+}
