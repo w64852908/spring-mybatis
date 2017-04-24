@@ -5,7 +5,8 @@ import com.lanxiang.rabbitmqmonitor.terminate.ExitUtil;
 import com.lanxiang.rabbitmqmonitor.utils.ConnectionUtil;
 import com.lanxiang.rabbitmqmonitor.utils.RMQConfig;
 import com.rabbitmq.client.Connection;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -14,8 +15,12 @@ import java.util.concurrent.TimeoutException;
  * Created by lanxiang on 2017/4/20.
  */
 
-@Slf4j
+/**
+ * 检测能否创建RabbitMQ连接
+ */
 public class AMQPPingCheck {
+
+    private final static Logger log = LoggerFactory.getLogger(AMQPPingCheck.class);
 
     public static void checkAMQPPing() {
         RMQConfig config = RMQConfig.Singleton.INSTANCE.getRmqConfig();

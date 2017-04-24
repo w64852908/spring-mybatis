@@ -13,6 +13,7 @@
         <module>com.lanxiang.springmvc</module>
         <module>com.lanxiang.mybatis</module>
         <module>com.lanxiang.rabbitmqmonitor</module>
+        <module>com.lanxiang.springrabbit</module>
     </modules>
 
     <properties>

@@ -1,17 +1,19 @@
 package com.lanxiang.rabbitmqmonitor.api;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import com.lanxiang.rabbitmqmonitor.remote.resource.VhostResource;
+import com.lanxiang.rabbitmqmonitor.remote.resource.RMQResource;
 import com.lanxiang.rabbitmqmonitor.utils.Base64Util;
 import com.lanxiang.rabbitmqmonitor.utils.RMQConfig;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.glassfish.jersey.apache.connector.ApacheClientProperties;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.proxy.WebResourceFactory;
 import org.glassfish.jersey.jackson.JacksonFeature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -28,8 +30,12 @@ import java.util.Map;
  * Created by lanxiang on 2017/4/21.
  */
 
-@Slf4j
+/**
+ * RabbitMQ的REST API
+ */
 public class RMQApi {
+
+    private final static Logger log = LoggerFactory.getLogger(RMQApi.class);
 
     private static Map<Class<?>, Object> restInstance = new HashMap<>();
 
@@ -54,13 +60,15 @@ public class RMQApi {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
 
         WebTarget target = ClientBuilder.newClient(clientConfig)
                 .register(JacksonFeature.class)
                 .register(new JacksonJsonProvider(objectMapper))
                 .target(rmqUrl);
 
-        restInstance.put(VhostResource.class, bindService(VhostResource.class, target, authorization));
+        restInstance.put(RMQResource.class, bindService(RMQResource.class, target, authorization));
     }
 
     private static <T> T bindService(Class<T> clazz, WebTarget target, String authorization) {

@@ -1,24 +1,22 @@
 import com.lanxiang.rabbitmqmonitor.api.RMQApi;
 import com.lanxiang.rabbitmqmonitor.check.AMQPPingCheck;
-import com.lanxiang.rabbitmqmonitor.remote.model.Vhost;
-import com.lanxiang.rabbitmqmonitor.remote.resource.VhostResource;
+import com.lanxiang.rabbitmqmonitor.check.APIPingCheck;
+import com.lanxiang.rabbitmqmonitor.remote.model.response.Vhost;
+import com.lanxiang.rabbitmqmonitor.remote.resource.RMQResource;
 import com.lanxiang.rabbitmqmonitor.utils.RMQConfig;
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.ws.rs.core.Response;
-import java.util.Arrays;
 
 /**
  * Created by lanxiang on 2017/4/20.
  */
 public class UnitTest {
 
-    private VhostResource vhostResource;
+    private RMQResource rmqResource;
 
     @Before
     public void init() {
-        vhostResource = RMQApi.getService(VhostResource.class);
+        rmqResource = RMQApi.getService(RMQResource.class);
     }
 
     @Test
@@ -34,7 +32,19 @@ public class UnitTest {
 
     @Test
     public void apiTest() {
-        Response response = vhostResource.getVhosts();
-        System.out.println(Arrays.toString(response.readEntity(Vhost[].class)));
+        Vhost[] vhosts = rmqResource.getVhosts();
+        for (Vhost vhost : vhosts) {
+            System.out.println(vhost);
+        }
+    }
+
+    @Test
+    public void alivenessTest() {
+        System.out.println(rmqResource.testAliveness());
+    }
+
+    @Test
+    public void apiPingCheck() {
+        APIPingCheck.checkAPIPing();
     }
 }

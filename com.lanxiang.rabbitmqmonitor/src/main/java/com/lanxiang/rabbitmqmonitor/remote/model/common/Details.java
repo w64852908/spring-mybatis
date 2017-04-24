@@ -3,7 +3,9 @@ package com.lanxiang.rabbitmqmonitor.remote.model.common;
 /**
  * Created by lanxiang on 2017/4/21.
  */
-public class BasicDetails {
+
+
+public class Details {
 
     private Double rate;
 
@@ -13,5 +15,12 @@ public class BasicDetails {
 
     public void setRate(Double rate) {
         this.rate = rate;
+    }
+
+    @Override
+    public String toString() {
+        return "Details{" +
+                "rate=" + rate +
+                '}';
     }
 }

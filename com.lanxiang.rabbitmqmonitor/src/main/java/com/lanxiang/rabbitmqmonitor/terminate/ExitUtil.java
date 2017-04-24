@@ -1,14 +1,17 @@
 package com.lanxiang.rabbitmqmonitor.terminate;
 
-import lombok.extern.slf4j.Slf4j;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by lanxiang on 2017/4/21.
  */
 
 
-@Slf4j
 public class ExitUtil {
+
+    private final static Logger log = LoggerFactory.getLogger(ExitUtil.class);
 
     public static void exit(String type) {
         if (type.equalsIgnoreCase("warning")) {
