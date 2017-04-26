@@ -1,26 +1,14 @@
 package com.lanxiang.rabbitmqmonitor.remote.model.common;
 
+import lombok.Data;
+
 /**
  * Created by lanxiang on 2017/4/21.
  */
 
-
+@Data
 public class Details {
 
     private Double rate;
 
-    public Double getRate() {
-        return rate;
-    }
-
-    public void setRate(Double rate) {
-        this.rate = rate;
-    }
-
-    @Override
-    public String toString() {
-        return "Details{" +
-                "rate=" + rate +
-                '}';
-    }
 }

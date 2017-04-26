@@ -15,9 +15,9 @@
 
     <rabbit:admin connection-factory="connectionFactory"/>
 
-    <rabbit:queue name="springrabbitexercise" durable="false"/>
+    <rabbit:queue name="springrabbitexercise" durable="true"/>
 
-    <rabbit:listener-container connection-factory="connectionFactory" max-concurrency="20">
+    <rabbit:listener-container connection-factory="connectionFactory" max-concurrency="8">
         <rabbit:listener ref="messageConsumer" method="listen" queue-names="springrabbitexercise"/>
     </rabbit:listener-container>
 

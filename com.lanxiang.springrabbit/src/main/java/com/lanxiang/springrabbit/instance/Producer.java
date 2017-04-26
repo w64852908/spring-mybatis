@@ -22,7 +22,7 @@ public class Producer {
                 template.convertAndSend(message);
                 n++;
             }
-            System.out.println(" [x] Sent 100 messages " + j + "/" + 10000);
+            System.out.println(" [x] Sent 100 messages " + n + "/" + 10000);
         }
     }
 }

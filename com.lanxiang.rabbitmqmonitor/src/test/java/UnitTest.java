@@ -1,6 +1,9 @@
 import com.lanxiang.rabbitmqmonitor.api.RMQApi;
 import com.lanxiang.rabbitmqmonitor.check.AMQPPingCheck;
 import com.lanxiang.rabbitmqmonitor.check.APIPingCheck;
+import com.lanxiang.rabbitmqmonitor.check.ClusterHealthCheck;
+import com.lanxiang.rabbitmqmonitor.check.QueueConfigCheck;
+import com.lanxiang.rabbitmqmonitor.model.CheckQueue;
 import com.lanxiang.rabbitmqmonitor.remote.model.response.Vhost;
 import com.lanxiang.rabbitmqmonitor.remote.resource.RMQResource;
 import com.lanxiang.rabbitmqmonitor.utils.RMQConfig;
@@ -46,5 +49,27 @@ public class UnitTest {
     @Test
     public void apiPingCheck() {
         APIPingCheck.checkAPIPing();
+    }
+
+    @Test
+    public void testGetQueueInfo() {
+        String vhost = "/";
+        String name = "springrabbitexercise";
+        System.out.println(rmqResource.getQueueInfo(vhost, name));
+    }
+
+    @Test
+    public void testQueueConfig() {
+        String queue_name = "springrabbitexercise";
+        Boolean auto_delete = false;
+        Boolean durable = true;
+        String vhost = "/";
+        CheckQueue queue = new CheckQueue(queue_name, auto_delete, durable);
+        QueueConfigCheck.checkQueueConfig(vhost, queue);
+    }
+
+    @Test
+    public void testClusterHealthCheck() {
+        ClusterHealthCheck.checkClusterHealth();
     }
 }

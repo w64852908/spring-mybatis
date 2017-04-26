@@ -1,5 +1,6 @@
 package com.lanxiang.rabbitmqmonitor.remote.resource;
 
+import com.lanxiang.rabbitmqmonitor.remote.model.response.QueueInfo;
 import com.lanxiang.rabbitmqmonitor.remote.model.response.Vhost;
 
 import javax.ws.rs.*;
@@ -32,12 +33,17 @@ public interface RMQResource {
 
     /**
      * Return a queue`s info
+     *
      * @param vhost
      * @param name
-     * @return
+     * @return QueueInfo
+     * @see QueueInfo
      */
     @GET
     @Path("queues/{vhost}/{name}")
     Response getQueueInfo(@PathParam("vhost") String vhost, @PathParam("name") String name);
 
+    @GET
+    @Path("nodes")
+    Response getNodes();
 }

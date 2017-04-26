@@ -15,5 +15,5 @@
 
     <rabbit:admin connection-factory="connectionFactory"/>
 
-    <rabbit:queue name="springrabbitexercise" durable="false"/>
+    <rabbit:queue name="springrabbitexercise" durable="true"/>
 </beans>

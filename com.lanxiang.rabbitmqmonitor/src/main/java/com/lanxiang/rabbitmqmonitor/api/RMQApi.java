@@ -63,6 +63,7 @@ public class RMQApi {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
 
+
         WebTarget target = ClientBuilder.newClient(clientConfig)
                 .register(JacksonFeature.class)
                 .register(new JacksonJsonProvider(objectMapper))

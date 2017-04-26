@@ -4,7 +4,7 @@ package com.lanxiang.rabbitmqmonitor.remote.model.common;
 /**
  * Created by lanxiang on 2017/4/24.
  */
-public class Stats {
+public class MessageStats {
 
     private Integer publish;
 
@@ -209,7 +209,7 @@ public class Stats {
 
     @Override
     public String toString() {
-        return "Stats{" +
+        return "MessageStats{" +
                 "publish=" + publish +
                 ", publish_details=" + publish_details +
                 ", confirm=" + confirm +
