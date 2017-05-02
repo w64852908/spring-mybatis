@@ -11,6 +11,8 @@ public class RMQConfig {
 
     private final String host;
 
+    private final int port;
+
     private final String username;
 
     private final String password;
@@ -22,6 +24,7 @@ public class RMQConfig {
         //读取resources下的properties文件
         properties.load(getClass().getClassLoader().getResourceAsStream("rabbitmq-cfg.properties"));
         host = properties.getProperty("host");
+        port = Integer.valueOf(properties.getProperty("port"));
         username = properties.getProperty("username");
         password = properties.getProperty("password");
         rmqUrl = properties.getProperty("rmq_url");
@@ -29,6 +32,10 @@ public class RMQConfig {
 
     public String getHost() {
         return host;
+    }
+
+    public int getPort() {
+        return port;
     }
 
     public String getUsername() {

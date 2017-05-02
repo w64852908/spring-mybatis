@@ -3,6 +3,10 @@ package com.lanxiang.rabbitmqmonitor.terminate;
 /**
  * Created by lanxiang on 2017/4/21.
  */
+
+/**
+ * 健康检测程序的几种状态
+ */
 public enum ExitType {
 
     WARN("warning"),

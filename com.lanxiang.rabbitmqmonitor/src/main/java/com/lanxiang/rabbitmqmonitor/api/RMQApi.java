@@ -47,7 +47,7 @@ public class RMQApi {
 
         String authorization = "Basic " + Base64Util.base64Encode((username + ":" + password).getBytes());
 
-        log.info("RabbitMQ monitor url {}", rmqUrl);
+        log.info("RabbitMQ monitor REST url {}", rmqUrl);
 
         ClientConfig clientConfig = new ClientConfig();
         PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();

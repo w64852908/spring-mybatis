@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
  */
 
 
+/**
+ * 接收状态码,并以Nagios状态码退出
+ */
 public class ExitUtil {
 
     private final static Logger log = LoggerFactory.getLogger(ExitUtil.class);
@@ -23,9 +26,12 @@ public class ExitUtil {
         } else if (type.equalsIgnoreCase("unknown")) {
             log.info("Status is UNKNOWN");
             System.exit(3);
-        } else {
+        } else if (type.equalsIgnoreCase("ok")) {
             log.info("Status is OK");
             System.exit(0);
+        } else {
+            log.error("Unknown exit type");
+            System.exit(-1);
         }
     }
 }
