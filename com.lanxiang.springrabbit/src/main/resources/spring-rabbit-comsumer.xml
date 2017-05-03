@@ -9,7 +9,7 @@
 
     <rabbit:annotation-driven/>
 
-    <rabbit:connection-factory id="connectionFactory" username="guest" password="guest" addresses="127.0.0.1"/>
+    <rabbit:connection-factory id="connectionFactory" username="guest" password="guest" host="127.0.0.1" port="5672"/>
 
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" routing-key="springrabbitexercise"/>
 

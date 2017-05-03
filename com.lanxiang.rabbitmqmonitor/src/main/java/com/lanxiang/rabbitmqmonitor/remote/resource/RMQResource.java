@@ -24,11 +24,11 @@ public interface RMQResource {
      * Declares a test queue, then publishes and consumes a message. Intended for use by monitoring tools.
      * If everything is working correctly, will return HTTP status 200 with body:
      *
-     * @return {"status":"ok"}
+     * @return {@link com.lanxiang.rabbitmqmonitor.remote.model.response.CheckResp}
      */
     @GET
-    @Path("aliveness-test/%2F")
-    Response testAliveness();
+    @Path("aliveness-test/{vhost}")
+    Response testAliveness(@PathParam("vhost") String vhost);
 
 
     /**
@@ -36,8 +36,7 @@ public interface RMQResource {
      *
      * @param vhost
      * @param name
-     * @return QueueInfo
-     * @see QueueInfo
+     * @return {@link QueueInfo}
      */
     @GET
     @Path("queues/{vhost}/{name}")

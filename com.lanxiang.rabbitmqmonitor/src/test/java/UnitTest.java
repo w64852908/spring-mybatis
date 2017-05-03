@@ -43,12 +43,14 @@ public class UnitTest {
 
     @Test
     public void alivenessTest() {
-        System.out.println(rmqResource.testAliveness());
+        String vhost = "/";
+        System.out.println(rmqResource.testAliveness(vhost));
     }
 
     @Test
     public void apiPingCheck() {
-        APIPingCheck.checkAPIPing();
+        String vhost = "/";
+        APIPingCheck.checkAPIPing(vhost);
     }
 
     @Test

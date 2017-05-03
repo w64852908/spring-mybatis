@@ -45,6 +45,7 @@ public class RMQApi {
         String username = config.getUsername();
         String password = config.getPassword();
 
+        //调用RabbitMQ Management HTTP API需要带上验证信息
         String authorization = "Basic " + Base64Util.base64Encode((username + ":" + password).getBytes());
 
         log.info("RabbitMQ monitor REST url {}", rmqUrl);
@@ -58,7 +59,6 @@ public class RMQApi {
         clientConfig.property(ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 

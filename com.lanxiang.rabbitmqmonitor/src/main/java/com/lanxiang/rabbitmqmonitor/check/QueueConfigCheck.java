@@ -31,8 +31,8 @@ public class QueueConfigCheck {
         try {
             response = rmqResource.getQueueInfo(vhost, queue.getQueue_name());
         } catch (Exception e) {
-            log.error("CRITICAL: Could not connect to {}, cause {}", host, e.getMessage());
-            ExitUtil.exit(ExitType.CRITICAL.getValue());
+            log.error("UNKNOWN: Could not connect to {}, cause {}", host, e.getMessage());
+            ExitUtil.exit(ExitType.UNKNOWN.getValue());
         }
         if (response == null || response.getStatus() == 404) {
             log.error("CRITICAL: Queue {} does not exist.", queue.getQueue_name());

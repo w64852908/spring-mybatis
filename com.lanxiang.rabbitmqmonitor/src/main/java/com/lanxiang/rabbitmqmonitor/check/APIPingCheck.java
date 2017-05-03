@@ -26,12 +26,12 @@ public class APIPingCheck {
 
     private final static Logger log = LoggerFactory.getLogger(APIPingCheck.class);
 
-    public static void checkAPIPing() {
+    public static void checkAPIPing(String vhost) {
         RMQConfig config = RMQConfig.Singleton.INSTANCE.getRmqConfig();
         String host = config.getHost();
         Response response = null;
         try {
-            response = rmqResource.testAliveness();
+            response = rmqResource.testAliveness(vhost);
         } catch (Exception e) {
             log.error("CRITICAL: Could not connect to {}, cause {}", host, e.getMessage());
             ExitUtil.exit(ExitType.CRITICAL.getValue());
