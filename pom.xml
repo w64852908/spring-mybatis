@@ -16,6 +16,7 @@
         <module>com.lanxiang.springrabbit</module>
         <module>com.lanxiang.kafka</module>
         <module>com.lanxiang.thrift</module>
+        <module>com.lanxiang.alijson</module>
     </modules>
 
     <properties>
