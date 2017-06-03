@@ -1,11 +1,12 @@
 package com.lanxiang.springmvc.server;
 
-import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 import org.eclipse.jetty.webapp.WebXmlConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
@@ -14,8 +15,9 @@ import java.net.URL;
  * Created by lanxiang on 2017/3/24.
  */
 
-@Slf4j
 public class WebServer {
+
+    private final static Logger log = LoggerFactory.getLogger(WebServer.class);
 
     public static void start(int port, String webappPath) {
         log.info("Start webapp : {}", webappPath);
