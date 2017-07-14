@@ -1,10 +1,12 @@
 package com.lanxiang.alijson.feature;
 
-import com.alibaba.fastjson.JSONObject;
-import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.Test;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * Created by lanxiang on 2017/5/27.
@@ -51,6 +53,22 @@ public class JSONObjectTest {
         String str = null;
         JSONObject jsonObject = JSONObject.parseObject(str);
         System.out.println(jsonObject);
+    }
+
+    @Test
+    public void testMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("ecardNo", "2333666");
+        String jsonStr = JSON.toJSONString(map);
+        System.out.println(jsonStr);
+        System.out.println(JSON.parseObject(jsonStr).getString("ecardNo"));
+    }
+
+    @Test
+    public void testMap2() {
+        String s1 = "{\"specialCapitalShowId\":\"1920\"}";
+        JSONObject jsonObject = JSONObject.parseObject(s1);
+        System.out.println(jsonObject.getString("specialCapitalShowId"));
     }
 }
 

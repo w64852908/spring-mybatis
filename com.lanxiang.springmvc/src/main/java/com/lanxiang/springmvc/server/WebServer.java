@@ -1,15 +1,16 @@
 package com.lanxiang.springmvc.server;
 
+import java.io.File;
+import java.net.URL;
+
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.util.log.Slf4jLog;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 import org.eclipse.jetty.webapp.WebXmlConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.net.URL;
 
 /**
  * Created by lanxiang on 2017/3/24.
@@ -37,6 +38,9 @@ public class WebServer {
                     new WebXmlConfiguration(),
                     new WebInfConfiguration()
             });
+            org.eclipse.jetty.util.log.Logger logger = new Slf4jLog();
+            logger.setDebugEnabled(true);
+            context.setLogger(logger);
 
             server.setHandler(context);
             server.start();
