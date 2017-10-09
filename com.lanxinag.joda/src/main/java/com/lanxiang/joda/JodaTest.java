@@ -1,5 +1,7 @@
 package com.lanxiang.joda;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -111,5 +113,90 @@ public class JodaTest {
         DateTime dateTime2 = new DateTime(2014, 1, 1, 0, 0, 0);
         System.out.println(dateTime1.getMillis());
         System.out.println(dateTime2.getMillis());
+    }
+
+    @Test
+    public void test14() {
+        DateTime dateTime = new DateTime();
+        System.out.println(dateTime.minusMillis(dateTime.getMillisOfDay()));
+        float a = 14;
+        int b = 15;
+        float c = a / b;
+        System.out.println(c);
+        Assert.assertTrue(c > 0.9);
+    }
+
+    private static final String DATE_FORMAT = "yyyyMMdd";
+
+    @Test
+    public void test15() {
+        String today = new DateTime().toString(DATE_FORMAT);
+        System.out.println(today);
+    }
+
+    @Test
+    public void test16() {
+        String pattern = "hh:mm:ss";
+        String now = new DateTime().toString(pattern);
+        System.out.println(now);
+    }
+
+    @Test
+    public void test17() {
+        String pattern = "yyyyMMdd hh:mm:ss";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        String now = format.format(new Date());
+        System.out.println(now);
+    }
+
+    @Test
+    public void test18() {
+        long start = new DateTime(2017, 6, 1, 0, 0, 0).getMillis();
+        long end = new DateTime(2017, 7, 31, 23, 59, 59).getMillis();
+        System.out.println(start);
+        System.out.println(end);
+    }
+
+    @Test
+    public void test19() throws ParseException {
+        String time = "2017-08-31 17:00:00";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = format.parse(time);
+        System.out.println(date);
+    }
+
+    @Test
+    public void test20() {
+        DateTime dateTime = new DateTime();
+
+        DateTime sixMonth = dateTime.plusMonths(6);
+
+        DateTime halfYear = dateTime.plusDays(180);
+
+        System.out.println(sixMonth.toString("yyyy-MM-dd HH:mm:ss"));
+
+        System.out.println(halfYear.toString("yyyy-MM-dd HH:mm:ss"));
+
+    }
+
+    @Test
+    public void test21(){
+        DateTime dateTime = new DateTime(1506496590054L);
+        System.out.println(dateTime.toString("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Test
+    public void test22(){
+        DateTime dateTime = new DateTime(1506068198273L);
+        System.out.println(dateTime.getYear());
+    }
+
+    @Test
+    public void test23(){
+        DateTime start = new DateTime(2017,9,27,0,0,0);
+        DateTime end = new DateTime(2017,9,27,23,59,59);
+
+        System.out.println(start.getMillis());
+        System.out.println(end.getMillis());
     }
 }

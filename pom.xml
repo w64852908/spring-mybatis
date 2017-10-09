@@ -19,6 +19,7 @@
         <module>com.lanxiang.alijson</module>
         <module>com.lanxinag.joda</module>
         <module>com.lanxiang.httpclient</module>
+        <module>com.lanxiang.esper</module>
     </modules>
 
     <properties>

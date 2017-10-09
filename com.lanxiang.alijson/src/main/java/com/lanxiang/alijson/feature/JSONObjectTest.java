@@ -32,7 +32,8 @@ public class JSONObjectTest {
         param.put("name", "lanjing");
         param.put("uid", 66666);
         jsonObject.putAll(param);
-        System.out.println(jsonObject.toJSONString());
+        String res = jsonObject.toJavaObject(String.class);
+        System.out.println(res);
     }
 
     @Test

@@ -1,11 +1,15 @@
 package com.lanxiang.alijson.demo;
 
-import com.alibaba.fastjson.JSON;
-import org.junit.Test;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.junit.Test;
+
+import com.alibaba.fastjson.JSON;
 
 /**
  * Created by lanxiang on 2017/5/17.
@@ -33,5 +37,22 @@ public class RunTest {
             }
             System.out.print(po.getCinemaId() + ",");
         }
+    }
+
+    @Test
+    public void test2(){
+        String info = "";
+        Map<String, Object> infos = JSON.parseObject(info) == null ?new HashMap<String, Object>() : JSON.parseObject(info);
+        infos.put("test",233);
+        System.out.println(infos);
+    }
+
+    @Test
+    public void test3(){
+        BigDecimal i = BigDecimal.TEN;
+        System.out.println(i.intValue());
+        i = i.negate();
+
+        System.out.println(i);
     }
 }
