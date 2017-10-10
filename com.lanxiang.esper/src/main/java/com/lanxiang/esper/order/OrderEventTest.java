@@ -84,7 +84,9 @@ public class OrderEventTest {
     public void countDiscountCardId() {
         String window = "create window cinemaWindow.win:time(10 sec) as " + EVENT_TYPE;
 
-        String express = "select discountCardId,count(*) AS count from " + EVENT_TYPE + " where isVip = 1 group by discountCardId having count(*) > 120";
+        String express = "select discountCardId from " + EVENT_TYPE;
+
+
 
         epAdministrator.compileEPL(window);
         EPStatement statement = epAdministrator.createEPL(express);

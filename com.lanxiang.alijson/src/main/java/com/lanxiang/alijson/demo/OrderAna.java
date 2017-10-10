@@ -24,7 +24,6 @@ public class OrderAna {
     public void sout() {
         List<Order> orders = JSONArray.parseArray(orderJson, Order.class);
         for (Order order : orders){
-            if (order.getMerId().equals(""))
         }
     }
 

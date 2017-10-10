@@ -12,6 +12,10 @@ public class OrderListener implements UpdateListener {
     public void update(EventBean[] newEvents, EventBean[] oldEvents) {
 //        countCinema(newEvents);
         countDiscountCardId(newEvents);
+        for (EventBean eventBean : newEvents) {
+            System.out.println("===");
+            System.out.println(eventBean.getUnderlying().toString());
+        }
     }
 
     private void countCinema(EventBean[] events) {
@@ -19,6 +23,6 @@ public class OrderListener implements UpdateListener {
     }
 
     private void countDiscountCardId(EventBean[] events) {
-        System.out.println("单个会员卡掉单达到阈值," + events[0].getUnderlying());
+//        System.out.println("单个会员卡掉单达到阈值," + events[0].getUnderlying());
     }
 }
