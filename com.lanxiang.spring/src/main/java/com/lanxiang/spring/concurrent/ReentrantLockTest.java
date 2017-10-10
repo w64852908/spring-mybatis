@@ -10,7 +10,7 @@ import org.junit.Test;
  */
 public class ReentrantLockTest {
 
-    private ReentrantLock lock = new ReentrantLock(false);
+    private ReentrantLock lock = new ReentrantLock();
 
     @Test
     public void testTrylock() throws InterruptedException {
@@ -18,13 +18,13 @@ public class ReentrantLockTest {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    trylock(lock);
+                    tryLock(lock);
                 }
             }).start();
         }
     }
 
-    private void trylock(ReentrantLock lock) {
+    private void tryLock(ReentrantLock lock) {
         if (lock.tryLock()) {
             System.out.println(Thread.currentThread().getName() + " get lock success.");
             try {
@@ -39,6 +39,77 @@ public class ReentrantLockTest {
             }
         } else {
             System.out.println(Thread.currentThread().getName() + "　get lock failed.");
+        }
+    }
+
+
+    @Test
+    public void testLock() throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    lock(lock);
+                }
+            }).start();
+        }
+
+        while (Thread.activeCount() > 2) {
+
+        }
+    }
+
+    private void lock(ReentrantLock lock) {
+        try {
+            lock.lock();
+            System.out.println(Thread.currentThread().getName() + " get lock success.");
+            System.out.println("do something");
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Test
+    public void testTryLockExpire() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                lock.lock();
+                try {
+                    TimeUnit.SECONDS.sleep(6);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                lock.unlock();
+            }
+        }).start();
+
+        tryLockExpire(lock);
+
+        while (Thread.activeCount() > 2){
+
+        }
+    }
+
+    private void tryLockExpire(ReentrantLock lock) {
+        try {
+            if (lock.tryLock(5, TimeUnit.SECONDS)) {
+                try {
+                    System.out.println(Thread.currentThread().getName() + " get lock success.");
+                    System.out.println("do something");
+                } finally {
+                    lock.unlock();
+                }
+            } else {
+                System.out.println(Thread.currentThread().getName() + "　get lock expired.");
+            }
+        } catch (InterruptedException e) {
+
         }
     }
 }
