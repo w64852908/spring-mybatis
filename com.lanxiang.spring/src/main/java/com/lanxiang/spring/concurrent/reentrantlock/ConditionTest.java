@@ -1,7 +1,5 @@
 package com.lanxiang.spring.concurrent.reentrantlock;
 
-import org.junit.Test;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -9,6 +7,8 @@ import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import org.junit.Test;
 
 /**
  * Created by lanjing on 2017/10/11.
