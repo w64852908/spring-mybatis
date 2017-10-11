@@ -3,7 +3,6 @@ package com.lanxiang.spring.concurrent.reentrantlock;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -75,7 +74,7 @@ class Model {
 
     private int maxSize;
 
-    private List<Date> container;
+    private LinkedList<Date> container;
 
     private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS");
 
@@ -96,7 +95,7 @@ class Model {
             }
             container.add(new Date());
             System.out.println(Thread.currentThread().getName() + ": put:" + container.size());
-            Thread.sleep(1000);
+            Thread.sleep(200);
             notEmpty.signalAll();//唤醒消费线程
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -112,9 +111,9 @@ class Model {
                 System.out.print(Thread.currentThread().getName() + ": wait \n");
                 notEmpty.await();//阻塞生产线程
             }
-            ((LinkedList<Date>) container).poll();
+            container.poll();
             System.out.println(Thread.currentThread().getName() + ": take:" + container.size());
-            Thread.sleep(1000);
+            Thread.sleep(200);
             notFull.signalAll();//唤醒消费线程
             notFull.signal();
         } catch (InterruptedException e) {

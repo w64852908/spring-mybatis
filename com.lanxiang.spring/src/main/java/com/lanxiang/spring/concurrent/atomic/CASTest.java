@@ -11,13 +11,12 @@ public class CASTest {
     @Test
     public void run() {
         final CasCounter counter = new CasCounter(0);
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 32; i++) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int j = 0; j < 5; j++) {
+                    for (int j = 0; j < 100; j++) {
                         int val = counter.increment();
-                        System.out.println(Thread.currentThread().getName() + " increment value : " + val);
                     }
                 }
             }).start();
@@ -54,13 +53,13 @@ class CasCounter {
 
 class SimulateCAS {
 
-    private int value;
+    private volatile int value;
 
     public SimulateCAS(int value) {
         this.value = value;
     }
 
-    public synchronized int getValue() {
+    public int getValue() {
         return value;
     }
 
@@ -74,6 +73,7 @@ class SimulateCAS {
         int oldValue = value;
         if (value == expectedValue) {
             value = newValue;
+            System.out.println(Thread.currentThread().getName() + " increment value : " + newValue);
         }
         return oldValue;
     }

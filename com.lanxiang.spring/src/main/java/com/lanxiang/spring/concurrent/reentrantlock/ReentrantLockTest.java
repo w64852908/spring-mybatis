@@ -1,6 +1,8 @@
-package com.lanxiang.spring.concurrent;
+package com.lanxiang.spring.concurrent.reentrantlock;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.junit.Test;
@@ -91,7 +93,7 @@ public class ReentrantLockTest {
 
         tryLockExpire(lock);
 
-        while (Thread.activeCount() > 2){
+        while (Thread.activeCount() > 2) {
 
         }
     }
@@ -110,6 +112,61 @@ public class ReentrantLockTest {
             }
         } catch (InterruptedException e) {
 
+        }
+    }
+
+    @Test
+    public void testLockInterruptibly() throws InterruptedException {
+
+        final Lock lock = new ReentrantLock();
+        lock.lock();
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    lock.lockInterruptibly();
+                } catch (InterruptedException e) {
+                    System.out.println(Thread.currentThread().getName() + " interrupted.");
+                }
+            }
+        }, "child thread -1");
+
+        t1.start();
+        Thread.sleep(1000);
+
+        t1.interrupt();
+
+        Thread.sleep(1000000);
+    }
+
+    @Test
+    public void testConditionAwait() throws InterruptedException {
+        final Lock lock = new ReentrantLock();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 100; i++) {
+                    lock.lock();
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    lock.unlock();
+                }
+            }
+        }, "sleep thread").start();
+
+        Condition leftTime = lock.newCondition();
+        long awaitTime = TimeUnit.SECONDS.toNanos(1);
+        lock.lockInterruptibly();
+        while (true) {
+            awaitTime = leftTime.awaitNanos(awaitTime);
+            System.out.println("left time : " + awaitTime);
+            if (awaitTime <= 0) {
+                return;
+            }
         }
     }
 }
