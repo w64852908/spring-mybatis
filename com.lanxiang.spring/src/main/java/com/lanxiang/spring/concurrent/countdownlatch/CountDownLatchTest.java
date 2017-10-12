@@ -1,12 +1,14 @@
 package com.lanxiang.spring.concurrent.countdownlatch;
 
-import org.junit.Test;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import org.junit.Test;
 
 /**
  * Created by lanjing on 2017/10/12.
@@ -19,23 +21,28 @@ public class CountDownLatchTest {
 
     @Test
     public void run() {
-        int threadNum = 10;
-        final CountDownLatch latch = new CountDownLatch(threadNum);
-        for (int i = 0; i < threadNum; i++) {
-            new Thread(new Runnable() {
+        int taskNum = 21;
+        final CountDownLatch latch = new CountDownLatch(taskNum);
+
+        ExecutorService executors = Executors.newFixedThreadPool(5);
+
+        for (int i = 0; i < taskNum; i++) {
+
+            executors.submit(new Runnable() {
                 @Override
                 public void run() {
-                    String start = format.format(new Date());
                     try {
-                        TimeUnit.SECONDS.sleep(random.nextInt(20) + 1);
+                        String start = format.format(new Date());
+                        TimeUnit.SECONDS.sleep(random.nextInt(5) + 1);
+                        String end = format.format(new Date());
+                        System.out.println(Thread.currentThread().getName() + " start job at " + start + " finish at " + end);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+                    } finally {
+                        latch.countDown();
                     }
-                    String end = format.format(new Date());
-                    System.out.println(Thread.currentThread().getName() + " start job at " + start + " finish at " + end);
-                    latch.countDown();
                 }
-            }).start();
+            });
         }
 
         try {

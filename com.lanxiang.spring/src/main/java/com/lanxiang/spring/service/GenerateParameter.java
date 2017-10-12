@@ -22,14 +22,32 @@ public class GenerateParameter {
 
     @Before
     public void init() {
-        using = PROD_DFFLW;
+        using = TEST_CHANNEL;
     }
 
     @Test
     public void run() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "gateway.sync.show");
-        params.put("bizData", "{\"cinemaId\":\"17160\",\"startDate\":\"2017-10-11\"}");
+        params.put("api", "gateway.trade.lock");
+        params.put("bizData", "{\n" +
+                "    \"cinemaId\": 11,\n" +
+                "    \"showId\": \"201710310000057\",\n" +
+                "    \"seatsJSON\": {\n" +
+                "        \"count\": \"1\",\n" +
+                "        \"list\": [\n" +
+                "            {\n" +
+                "                \"sectionId\": \"0000000000000001\",\n" +
+                "                \"seatNo\": \"18979276\",\n" +
+                "                \"columnId\": \"01\",\n" +
+                "                \"rowId\": \"4\"\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    },\n" +
+                "    \"orderCode\": \"691062026437013\",\n" +
+                "    \"mobile\": \"13263297337\",\n" +
+                "    \"settlePrice\": 3300,\n" +
+                "    \"sellPrice\": 3300\n" +
+                "}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
