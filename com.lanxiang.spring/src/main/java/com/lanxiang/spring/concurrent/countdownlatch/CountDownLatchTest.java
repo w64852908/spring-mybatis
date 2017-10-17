@@ -21,7 +21,7 @@ public class CountDownLatchTest {
 
     @Test
     public void run() {
-        int taskNum = 21;
+        int taskNum = 11;
         final CountDownLatch latch = new CountDownLatch(taskNum);
 
         ExecutorService executors = Executors.newFixedThreadPool(5);
@@ -33,7 +33,7 @@ public class CountDownLatchTest {
                 public void run() {
                     try {
                         String start = format.format(new Date());
-                        TimeUnit.SECONDS.sleep(random.nextInt(5) + 1);
+                        TimeUnit.SECONDS.sleep(random.nextInt(2) + 1);
                         String end = format.format(new Date());
                         System.out.println(Thread.currentThread().getName() + " start job at " + start + " finish at " + end);
                     } catch (InterruptedException e) {
@@ -45,8 +45,28 @@ public class CountDownLatchTest {
             });
         }
 
+//        try {
+//            latch.await();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+        for (int i = 0; i < 2; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        latch.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(Thread.currentThread().getName() + " await finished");
+                }
+            }, "Main thread-" + i).start();
+        }
+
         try {
-            latch.await();
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -56,6 +56,7 @@ public class InterruptTest {
 
         t1.interrupt();
 
+
         Thread.sleep(5000);
     }
 }

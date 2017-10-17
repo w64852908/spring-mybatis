@@ -16,41 +16,23 @@ public class GenerateParameter {
 
     private static final Channel PROD_MY = new Channel(1000003, "");
 
-    private static final Channel PROD_DFFLW = new Channel(1000007, "");
+    private static final Channel PROD_QQ = new Channel(1000030, "");
 
     private Channel using;
 
     @Before
     public void init() {
-        using = TEST_CHANNEL;
+        using = PROD_QQ;
     }
 
     @Test
     public void run() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "gateway.trade.lock");
-        params.put("bizData", "{\n" +
-                "    \"cinemaId\": 11,\n" +
-                "    \"showId\": \"201710310000057\",\n" +
-                "    \"seatsJSON\": {\n" +
-                "        \"count\": \"1\",\n" +
-                "        \"list\": [\n" +
-                "            {\n" +
-                "                \"sectionId\": \"0000000000000001\",\n" +
-                "                \"seatNo\": \"18979276\",\n" +
-                "                \"columnId\": \"01\",\n" +
-                "                \"rowId\": \"4\"\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    },\n" +
-                "    \"orderCode\": \"691062026437013\",\n" +
-                "    \"mobile\": \"13263297337\",\n" +
-                "    \"settlePrice\": 3300,\n" +
-                "    \"sellPrice\": 3300\n" +
-                "}");
+        params.put("api", "mmdb.movieInfo");
+        params.put("bizData", "{\"movieId\":78692}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
-        params.put("timestamp", "2690258952");
+        params.put("timestamp", "1508216603");
         params.put("version", "1.0");
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, Object> entry : params.entrySet()) {
@@ -64,6 +46,7 @@ public class GenerateParameter {
         System.out.println(s);
         String sign = DigestUtils.md5Hex(s).toUpperCase();
         System.out.println(sign);
+
     }
 }
 
