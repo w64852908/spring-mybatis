@@ -18,22 +18,18 @@ public class GenerateParameter {
 
     private static final Channel PROD_QQ = new Channel(1000030, "");
 
+    private static final Channel PROD_DFFLW = new Channel(1000007, "");
+
     private Channel using;
 
     @Before
     public void init() {
-        using = PROD_QQ;
+        using = TEST_CHANNEL;
     }
 
     @Test
     public void run() {
-        TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "mmdb.movieInfo");
-        params.put("bizData", "{\"movieId\":78692}");
-        params.put("merCode", using.getMerId());
-        params.put("signType", "MD5");
-        params.put("timestamp", "1508216603");
-        params.put("version", "1.0");
+        TreeMap<String, Object> params = lockSeat();
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             if (null != entry.getValue()) {
@@ -48,6 +44,58 @@ public class GenerateParameter {
         System.out.println(sign);
 
     }
+
+    private TreeMap<String, Object> syncShows() {
+        TreeMap<String, Object> params = new TreeMap<>();
+        params.put("api", "gateway.sync.show");
+        params.put("bizData", "{\"cinemaId\":\"11\",\"startDate\":\"2017-10-18\"}");
+        params.put("merCode", using.getMerId());
+        params.put("signType", "MD5");
+        params.put("timestamp", "2690258952");
+        params.put("version", "1.0");
+        return params;
+    }
+
+    private TreeMap<String, Object> dymaicSeat() {
+        TreeMap<String, Object> params = new TreeMap<>();
+        params.put("api", "gateway.trade.seat");
+        params.put("bizData", "{\"showId\":\"201710300000001\"}");
+        params.put("merCode", using.getMerId());
+        params.put("signType", "MD5");
+        params.put("timestamp", "2690258952");
+        params.put("version", "1.0");
+        return params;
+    }
+
+    private TreeMap<String, Object> lockSeat() {
+        TreeMap<String, Object> params = new TreeMap<>();
+        params.put("api", "gateway.trade.lock");
+        params.put("bizData", "{\n" +
+                "    \"cinemaId\": 11,\n" +
+                "    \"showId\": \"201710300000001\",\n" +
+                "    \"seatsJSON\": {\n" +
+                "        \"count\": \"1\",\n" +
+                "        \"list\": [\n" +
+                "            {\n" +
+                "                \"sectionId\": \"0000000000000001\",\n" +
+                "                \"seatNo\": \"19246445\",\n" +
+                "                \"columnId\": \"01\",\n" +
+                "                \"rowId\": \"1\"\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    },\n" +
+                "    \"orderCode\": \"691062026437013\",\n" +
+                "    \"mobile\": \"13263297337\",\n" +
+                "    \"settlePrice\": 3300,\n" +
+                "    \"sellPrice\": 3300\n" +
+                "}");
+        params.put("merCode", using.getMerId());
+        params.put("signType", "MD5");
+        params.put("timestamp", "2690258952");
+        params.put("version", "1.0");
+        return params;
+    }
+
 }
 
 class Channel {
