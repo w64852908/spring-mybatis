@@ -1,12 +1,12 @@
 package com.lanxiang.spring.run;
 
-import com.lanxiang.spring.service.PerformanceService;
-import com.lanxiang.spring.service.UserService;
-import com.lanxiang.spring.service.impl.PerformanceServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.lanxiang.spring.service.PerformanceService;
+import com.lanxiang.spring.service.UserService;
 
 /**
  * Created by lanxiang on 2017/3/24.
@@ -38,5 +38,9 @@ public class Main {
     public void run2() {
         PerformanceService service = context.getBean(PerformanceService.class);
         service.doSomething("hahahha");
+    }
+
+    @Test
+    public void getRange() {
     }
 }
