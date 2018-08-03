@@ -12,21 +12,22 @@ import org.junit.Test;
  */
 public class GenerateParameter {
 
-    private static final Channel TEST_CHANNEL = new Channel(1000014, "");
+    private static final Channel TEST_CHANNEL = new Channel(1000014, "A013F70DB97834C0A5492378BD76C53A");
 
-    private static final Channel TEST_INTELLI_CHANNEL = new Channel(1000015, "");
+    private static final Channel ZY = new Channel(1000009, "f931431e13c751345c40195b9df968c1");
+
 
 
     private Channel using;
 
     @Before
     public void init() {
-        using = TEST_CHANNEL;
+        using = ZY;
     }
 
     @Test
     public void run() {
-        TreeMap<String, Object> params = mmdbHotMovies();
+        TreeMap<String, Object> params = syncShows();
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             if (null != entry.getValue()) {
@@ -51,10 +52,43 @@ public class GenerateParameter {
         return params;
     }
 
+    private TreeMap<String, Object> syncShows() {
+        TreeMap<String, Object> params = new TreeMap<>();
+        params.put("api", "gateway.sync.show");
+        params.put("bizData", "{\"cinemaId\":10497,\"startDate\":\"2018-07-31\"}");
+        params.put("merCode", using.getMerId());
+        params.put("signType", "MD5");
+        params.put("timestamp", "2690258952");
+        params.put("version", "1.0");
+        return params;
+    }
+
+    private TreeMap<String, Object> staticSeat() {
+        TreeMap<String, Object> params = new TreeMap<>();
+        params.put("api", "gateway.sync.seats");
+        params.put("bizData", "{\"cinemaId\":11,\"hallId\":42253}");
+        params.put("merCode", using.getMerId());
+        params.put("signType", "MD5");
+        params.put("timestamp", "2690258952");
+        params.put("version", "1.0");
+        return params;
+    }
+
+    private TreeMap<String, Object> dynamicSeat() {
+        TreeMap<String, Object> params = new TreeMap<>();
+        params.put("api", "gateway.trade.seat");
+        params.put("bizData", "{\"showId\":\"201806220000001\"}");
+        params.put("merCode", using.getMerId());
+        params.put("signType", "MD5");
+        params.put("timestamp", "2690258952");
+        params.put("version", "1.0");
+        return params;
+    }
+
     private TreeMap<String, Object> syncHalls() {
         TreeMap<String, Object> params = new TreeMap<>();
         params.put("api", "gateway.sync.halls");
-        params.put("bizData", "{\"cinemaId\":2}");
+        params.put("bizData", "{\"cinemaId\":5111}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -62,10 +96,10 @@ public class GenerateParameter {
         return params;
     }
 
-    private TreeMap<String, Object> syncSeats() {
+    private TreeMap<String, Object> comingMovies() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "gateway.sync.seats");
-        params.put("bizData", "{\"cinemaId\":2,\"hallId\":281}");
+        params.put("api", "mmdb.comingMovies");
+        params.put("bizData", "{\"cityId\":840}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -73,10 +107,10 @@ public class GenerateParameter {
         return params;
     }
 
-    private TreeMap<String, Object> dymaicSeats() {
+    private TreeMap<String, Object> hotMovies() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "gateway.trade.seat");
-        params.put("bizData", "{\"showId\":\"201712210000057\"}");
+        params.put("api", "mmdb.hotMovies");
+        params.put("bizData", "{\"cityId\":1}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -84,29 +118,11 @@ public class GenerateParameter {
         return params;
     }
 
-    private TreeMap<String, Object> lockSeat() {
-        TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "gateway.trade.lock");
-        params.put("bizData", "{\n" +
-                "    \"sellPrice\": \"3300\",\n" +
-                "    \"settlePrice\": \"3300\",\n" +
-                "    \"cinemaId\": \"11\",\n" +
-                "    \"orderCode\": \"MHIGUTEST001\",\n" +
-                "    \"showId\": \"201712210000057\",\n" +
-                "    \"mobile\": \"13166067065\",\n" +
-                "    \"seatsJSON\": \"{\\\"count\\\":\\\"1\\\",\\\"list\\\":[{\\\"sectionId\\\":\\\"0000000000000001\\\",\\\"seatNo\\\":\\\"20585200\\\",\\\"rowId\\\":\\\"1\\\",\\\"columnId\\\":\\\"05\\\"}]}\"\n" +
-                "}");
-        params.put("merCode", using.getMerId());
-        params.put("signType", "MD5");
-        params.put("timestamp", "2690258952");
-        params.put("version", "1.0");
-        return params;
-    }
 
     private TreeMap<String, Object> fixOrder() {
         TreeMap<String, Object> params = new TreeMap<>();
         params.put("api", "gateway.trade.fixOrder");
-        params.put("bizData", "{\"orderId\":4437473,\"orderCode\":\"DD-1031-CA271DCD7566E28689D9D119\"}");
+        params.put("bizData", "{\"orderCode\":\"lanxiang490023\",\"orderId\":4446470}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -117,7 +133,7 @@ public class GenerateParameter {
     private TreeMap<String, Object> queryOrder() {
         TreeMap<String, Object> params = new TreeMap<>();
         params.put("api", "gateway.trade.queryOrder");
-        params.put("bizData", "{\"orderId\":4437473}");
+        params.put("bizData", "{\"orderId\":4446414}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -125,9 +141,10 @@ public class GenerateParameter {
         return params;
     }
 
-    private TreeMap<String, Object> intelliCinemas() {
+    private TreeMap<String, Object> lockSeat() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "intelli.sync.cinemas");
+        params.put("api", "gateway.trade.lock");
+        params.put("bizData", "{\"sellPrice\":11000,\"settlePrice\":11000,\"cinemaId\":\"11\",\"orderCode\":\"MV0101222018071300111704\",\"showId\":\"201807130000231\",\"mobile\":\"13591244598\",\"seatsJSON\":{\"count\":1,\"list\":[{\"sectionId\":\"0000000000000001\",\"seatNo\":\"30274343\",\"rowId\":\"4\",\"columnId\":\"02\"}]}}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -135,10 +152,10 @@ public class GenerateParameter {
         return params;
     }
 
-    private TreeMap<String, Object> intelliHalls() {
+    private TreeMap<String, Object> topBox() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "intelli.sync.halls");
-        params.put("bizData", "{\"cinemaId\":\"16588\"}");
+        params.put("api", "mpro.movie.topBox");
+        params.put("bizData", "{\"queryDate\":20180124}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -146,10 +163,10 @@ public class GenerateParameter {
         return params;
     }
 
-    private TreeMap<String, Object> intelliSeats() {
+    private TreeMap<String, Object> district() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "intelli.sync.seats");
-        params.put("bizData", "{\"cinemaId\":\"16588\",\"hallId\":\"0000000000000001\"}");
+        params.put("api", "base.district");
+        params.put("bizData", "{\"cityId\":30}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -157,10 +174,11 @@ public class GenerateParameter {
         return params;
     }
 
-    private TreeMap<String, Object> intelliShow() {
+    //=============
+    private TreeMap<String, Object> alert() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "intelli.sync.show");
-        params.put("bizData", "{\"cinemaId\":\"2507\",\"startDate\":\"2017-11-14\",\"endDate\":\"2017-11-15\"}");
+        params.put("api", "baseservice.msg.alert");
+        params.put("bizData", "{\"cinemaId\":\"11\",\"startDate\":\"2017-12-12\"}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -168,40 +186,21 @@ public class GenerateParameter {
         return params;
     }
 
-    private TreeMap<String, Object> intelliLockSeat() {
+    private TreeMap<String, Object> pay() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "intelli.lock.seat");
-        params.put("bizData", "{\n" +
-                "    \"orderId\": \"17112211504048152\",\n" +
-                "    \"showUniqueSeqNo\": \"201711146\",\n" +
-                "    \"mobilePhone\": \"18618185437\",\n" +
-                "    \"totalMoney\": 7800,\n" +
-                "    \"originalTicketMoney\": 7800,\n" +
-                "    \"seatModelList\": [\n" +
-                "        {\n" +
-                "            \"seatCode\": \"0000000000001849\",\n" +
-                "            \"seatNumber\": \"A:1\",\n" +
-                "            \"sectionId\": \"1\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"seatCode\": \"0000000000001850\",\n" +
-                "            \"seatNumber\": \"A:2\",\n" +
-                "            \"sectionId\": \"1\"\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"sourceId\": \"201711146\"\n" +
-                "}");
+        params.put("api", "pay.common.bank.all");
+        params.put("bizData", "{\"offlinePaySource\":2,\"merchantId\":0,\"sign\":\"03cbad80e7c59921ca4136ed62247b5c8ee604a2894fb325be67cb0995671ab0\",\"random\":\"64\"}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
-        params.put("timestamp", "2690258952");
+        params.put("timestamp", "1530305808");
         params.put("version", "1.0");
         return params;
     }
 
-    private TreeMap<String, Object> mmdbMovieInfo() {
+    private TreeMap<String, Object> lowestPrice() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "mmdb.movieInfo");
-        params.put("bizData", "{\"movieId\":\"1190680\"}");
+        params.put("api", "price.movieLowestPrice");
+        params.put("bizData", "{\"movieId\":\"343720\"}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -209,10 +208,10 @@ public class GenerateParameter {
         return params;
     }
 
-    private TreeMap<String, Object> mmdbHotMovies() {
+    private TreeMap<String, Object> pushCgvVipPrice() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "mmdb.hotMovies");
-        params.put("bizData", "{\"cityId\":\"55\"}");
+        params.put("api", "data.cgv.vipshow");
+        params.put("bizData", "{\"mcardPrice\":{\"LIST_IFMMMaoYanMemberCardPrice\":[{\"MBR_CRD_CD\":\"0048\",\"MBR_CRD_PRC\":\"12\",\"SARFT_THAT_CD\":\"31182201\",\"SCN_SCH_SEQ\":\"0000000008676755\",\"SEAT_GRD_CD\":\"01\"},{\"MBR_CRD_CD\":\"0048\",\"MBR_CRD_PRC\":\"13\",\"SARFT_THAT_CD\":\"31182201\",\"SCN_SCH_SEQ\":\"0000000008676756\",\"SEAT_GRD_CD\":\"02\"},{\"MBR_CRD_CD\":\"0048\",\"MBR_CRD_PRC\":\"12\",\"SARFT_THAT_CD\":\"31182201\",\"SCN_SCH_SEQ\":\"0000000008676756\",\"SEAT_GRD_CD\":\"01\"},{\"MBR_CRD_CD\":\"0048\",\"MBR_CRD_PRC\":\"48\",\"SARFT_THAT_CD\":\"31182201\",\"SCN_SCH_SEQ\":\"0000000008676753\",\"SEAT_GRD_CD\":\"01\"},{\"MBR_CRD_CD\":\"0048\",\"MBR_CRD_PRC\":\"48\",\"SARFT_THAT_CD\":\"31182201\",\"SCN_SCH_SEQ\":\"0000000008676754\",\"SEAT_GRD_CD\":\"01\"}]}}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -220,11 +219,10 @@ public class GenerateParameter {
         return params;
     }
 
-
-    private TreeMap<String, Object> cmMovieInfo() {
+    private TreeMap<String, Object> cmdataInfo() {
         TreeMap<String, Object> params = new TreeMap<>();
         params.put("api", "cmdata.movieInfo");
-        params.put("bizData", "{\"movieId\":11}");
+        params.put("bizData", "{\"movieId\":\"131\"}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
@@ -232,16 +230,17 @@ public class GenerateParameter {
         return params;
     }
 
-    private TreeMap<String, Object> cityList() {
+    private TreeMap<String, Object> cmdataMovieallInfo() {
         TreeMap<String, Object> params = new TreeMap<>();
-        params.put("api", "base.city");
+        params.put("api", "cmdata.movieallinfo");
+        params.put("bizData", "{\"offset\":0,\"limit\":10,\"timestamp\":" + "\"1528339402709000\"" + "}");
+//        params.put("bizData", "{\"offset\":0,\"limit\":10,\"timestamp\":" + System.currentTimeMillis() * 1000 + "}");
         params.put("merCode", using.getMerId());
         params.put("signType", "MD5");
         params.put("timestamp", "2690258952");
         params.put("version", "1.0");
         return params;
     }
-
 }
 
 class Channel {

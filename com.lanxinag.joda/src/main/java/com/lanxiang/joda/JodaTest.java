@@ -2,10 +2,16 @@ package com.lanxiang.joda;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,6 +19,27 @@ import org.junit.Test;
  * Created by lanxiang on 2017/6/14.
  */
 public class JodaTest {
+
+    @Test
+    public void marathonDate() {
+        DateTime endDate = new DateTime(2018, 9, 23, 0, 0, 0);
+        DateTime today = new DateTime();
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        int i = 12;
+        DateTime weekStart, weekEnd;
+        List<String> output = new ArrayList<>();
+        while (i > 0) {
+            weekEnd = endDate;
+            weekStart = endDate.minusDays(6);
+            output.add(String.format("第%s周训练,范围[%s]-[%s]", i, weekStart.toString(formatter), weekEnd.toString(formatter)));
+            i--;
+            endDate = endDate.minusDays(7);
+        }
+        Collections.reverse(output);
+        for (String str : output) {
+            System.out.println(str);
+        }
+    }
 
     @Test
     public void test1() {
@@ -159,10 +186,10 @@ public class JodaTest {
 
     @Test
     public void test19() throws ParseException {
-        String time = "2017-08-31 17:00:00";
+        String time = "2018-01-19 11:10:00";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = format.parse(time);
-        System.out.println(date);
+        System.out.println(date.getTime());
     }
 
     @Test
@@ -181,15 +208,15 @@ public class JodaTest {
 
     @Test
     public void test21() {
-        DateTime dateTime = new DateTime(1511427962608L);
+        DateTime dateTime = new DateTime(1527073200000L);
         System.out.println(dateTime.toString("yyyy-MM-dd HH:mm:ss"));
     }
 
     @Test
     public void test22() {
-        DateTime dateTime = new DateTime(1511604690051L);
+        DateTime dateTime = new DateTime(1518844516080L);
         System.out.println(dateTime);
-        dateTime = new DateTime(1511604720484L);
+        dateTime = new DateTime(1518343200000L);
         System.out.println(dateTime);
     }
 
@@ -216,5 +243,118 @@ public class JodaTest {
         System.out.println(d5);
     }
 
+    @Test
+    public void test25() {
+        Date today = new DateTime().toLocalDate().toDate();
+        System.out.println(today);
 
+        Date now = new DateTime().toDate();
+        System.out.println(now);
+
+        System.out.println(LocalDate.now());
+    }
+
+    @Test
+    public void test26() {
+        DateTime now = new DateTime().plusHours(6);
+        System.out.println(now.getHourOfDay());
+        DateTime date = new DateTime(2018, 1, 30, 22, 0, 0);
+        System.out.println(date.getHourOfDay());
+    }
+
+    @Test
+    public void test27() {
+        String format = "yyyyMMdd";
+        DateTime start = new DateTime(2018, 1, 31, 0, 0, 0);
+        DateTime end = new DateTime(2019, 2, 1, 0, 0, 0);
+        while (start.isBefore(end.getMillis())) {
+            System.out.println("ALTER TABLE `record_log" + start.toString(format) + "` CHANGE `order_id` `order_id` BIGINT(20)  UNSIGNED  NOT NULL  DEFAULT '0'  COMMENT '订单ID';");
+            start = start.plusDays(1);
+        }
+    }
+
+    @Test
+    public void test28() {
+        String dateStr = "20180212";
+        System.out.println(LocalDate.parse(dateStr).toString("yyyyMMdd"));
+    }
+
+    @Test
+    public void test29() {
+        Date date = new Date();
+        System.out.println(String.format("lanxiang:%s:%s", new SimpleDateFormat("yyyyMMdd").format(date), 2333));
+    }
+
+    @Test
+    public void test30() {
+        DateTime date = new DateTime(2017, 8, 13, 0, 0, 0);
+        System.out.println(date.plusDays(180).toString("yyyyMMdd"));
+    }
+
+    @Test
+    public void test31() {
+        String dateStr = "20180827";
+        System.out.println(DateTimeFormat.forPattern("yyyyMMdd").parseDateTime(dateStr).plusDays(1).minusMillis(1).toDate());
+    }
+
+    @Test
+    public void test32() {
+        DateTime start = new DateTime(2018, 3, 1, 0, 0, 0);
+        DateTime end = new DateTime(2018, 3, 1, 0, 0, 0);
+        System.out.println(start.getMillis() + "-" + end.getMillis());
+    }
+
+    @Test
+    public void testPlus() {
+        DateTime now = new DateTime();
+        System.out.println(now);
+        now.plusDays(11);
+        System.out.println(now);
+    }
+
+    @Test
+    public void test33() {
+        long time = 1529028185017L;
+        System.out.println(new DateTime(time).toString("yyyyMMdd hh:MM:ss"));
+
+    }
+
+    @Test
+    public void test34() {
+        DateTime dateTime = new DateTime(2018, 3, 27, 12, 9, 8);
+        DateTime expireDate = dateTime.plusDays(180);
+        System.out.println(expireDate.toString("yyyy-MM-dd hh:MM:ss"));
+    }
+
+    @Test
+    public void test35() {
+        DateTime now = new DateTime();
+        DateTime tomorrow = now.plusDays(2);
+        System.out.println((tomorrow.getMillis() - now.getMillis()) / 1000 / 3600 / 24);
+    }
+
+    @Test
+    public void test36() {
+        String format = "yyyyMMdd hh:MM:ss";
+
+        DateTime now = new DateTime();
+
+        int hour = now.getHourOfDay();
+        int minute = now.getMinuteOfHour();
+        int seconds = now.getSecondOfMinute();
+
+        now = now.minusHours(hour).minusMinutes(minute).minusSeconds(seconds);
+
+        DateTime start = now.minusDays(7);
+
+        DateTime end = start.plusDays(1);
+
+
+        System.out.println(start.toString(format));
+
+        System.out.println(end.toString(format));
+
+        DateTime haha = DateTime.now().withTimeAtStartOfDay();
+        System.out.println(haha.toString(format));
+    }
 }

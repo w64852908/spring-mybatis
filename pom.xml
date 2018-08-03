@@ -17,6 +17,7 @@
         <module>com.lanxinag.joda</module>
         <module>com.lanxiang.httpclient</module>
         <module>com.lanxiang.esper</module>
+        <module>com.lanxiang.localcache</module>
     </modules>
 
     <properties>
@@ -40,6 +41,7 @@
         <apache-commons-io.version>2.5</apache-commons-io.version>
         <fastjson.version>1.2.32</fastjson.version>
         <apache-commons-codec.version>1.10</apache-commons-codec.version>
+        <apache-commons-beanutil>1.9.3</apache-commons-beanutil>
     </properties>
 
     <dependencyManagement>
@@ -194,6 +196,12 @@
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>${apache-commons-codec.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${apache-commons-beanutil}</version>
             </dependency>
 
             <!-- fast json-->

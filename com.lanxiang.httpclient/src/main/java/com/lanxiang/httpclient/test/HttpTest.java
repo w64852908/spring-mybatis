@@ -27,4 +27,11 @@ public class HttpTest {
         String meg = response.getResponseAsString();
         System.out.println(meg);
     }
+
+    @Test
+    public void test2() {
+        String url = "http://localhost:8080/api/test/b";
+        IHTTPResponse response = helper.postJSON(url, "{\"name\":\"lanxiang\",\"age\":24}");
+        System.out.println(response.getResponseAsString());
+    }
 }

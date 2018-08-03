@@ -87,7 +87,6 @@ public class OrderEventTest {
         String express = "select discountCardId from " + EVENT_TYPE;
 
 
-
         epAdministrator.compileEPL(window);
         EPStatement statement = epAdministrator.createEPL(express);
         statement.addListener(new OrderListener());
@@ -95,7 +94,17 @@ public class OrderEventTest {
     }
 
     @Test
-    public void test2(){
-        System.out.println("lan-xiang".split("-")[0]);
+    public void testSelectAll() {
+        String window = "create window cinemaWindow.win:time(10 minutes) as " + EVENT_TYPE;
+
+        String source = "insert into cinemaWindow select * from " + EVENT_TYPE;
+
+        String express = "select * from " + EVENT_TYPE;
+
+
+        epAdministrator.compileEPL(window);
+        EPStatement statement = epAdministrator.createEPL(express);
+        statement.addListener(new OrderListener());
+        sendManyOrderData();
     }
 }

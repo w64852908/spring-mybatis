@@ -4,7 +4,19 @@ package com.lanxiang.httpclient.utils;
  * Created by lanxiang on 2017/6/20.
  */
 
-import com.alibaba.fastjson.JSONObject;
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.io.Serializable;
+import java.net.ConnectException;
+import java.net.UnknownHostException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
+import javax.net.ssl.SSLException;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -40,22 +52,13 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.SSLException;
-import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.io.Serializable;
-import java.net.ConnectException;
-import java.net.UnknownHostException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import com.alibaba.fastjson.JSONObject;
 
 public class HTTPHelper implements Serializable {
     private static final long serialVersionUID = -3299372832483886065L;
@@ -193,6 +196,24 @@ public class HTTPHelper implements Serializable {
             if ((params != null) && (!params.isEmpty())) {
                 List nvps = getParamsList(params);
                 httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("HTTPHelper post " + url);
+            }
+            return retriveResponse(this._httpClient.execute(httpPost));
+        } catch (IOException e) {
+            LOGGER.debug("post exception " + url, e);
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public IHTTPResponse postJSON(String url, String params) {
+        try {
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.addHeader(HTTP.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
+            if (null != params && !"".equals(params)) {
+                httpPost.setEntity(new StringEntity(params, ContentType.APPLICATION_JSON));
             }
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("HTTPHelper post " + url);

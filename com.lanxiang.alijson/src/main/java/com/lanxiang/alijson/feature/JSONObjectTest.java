@@ -71,6 +71,12 @@ public class JSONObjectTest {
         JSONObject jsonObject = JSONObject.parseObject(s1);
         System.out.println(jsonObject.getString("specialCapitalShowId"));
     }
+
+    @Test
+    public void test100() {
+        String str = null;
+        JSON.parseObject(str);
+    }
 }
 
 class User {
