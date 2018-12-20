@@ -14,10 +14,6 @@ public class GenerateParameter {
 
     private static final Channel TEST_CHANNEL = new Channel(1000014, "A013F70DB97834C0A5492378BD76C53A");
 
-    private static final Channel ZY = new Channel(1000009, "f931431e13c751345c40195b9df968c1");
-
-
-
     private Channel using;
 
     @Before
